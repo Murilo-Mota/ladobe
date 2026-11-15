@@ -11,14 +11,14 @@
   "enderecos": [
     {
       "rotulo": "Loja",
-      "cidade": "Cidade",
-      "bairro": "Bairro",
-      "complemento": "",
-      "cep": "",
+      "cidade": "Criciúma",
+      "bairro": "Centro",
+      "complemento": "Sala 03",
+      "cep": "88801-010",
       "ativo": true,
-      "uf": "UF",
-      "logradouro": "Endereço a preencher",
-      "numero": "0"
+      "uf": "SC",
+      "logradouro": "Rua Henrique Lage",
+      "numero": "30"
     }
   ],
   "logo": "",
@@ -40,7 +40,7 @@
   "emails": [
     {
       "rotulo": "Atendimento",
-      "email": "contato@exemplo.com.br",
+      "email": "beatriz@emporioladobe.com",
       "ativo": true
     }
   ],
