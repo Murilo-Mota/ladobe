@@ -1,0 +1,13 @@
+{
+  "nome": "Trufa Clássica",
+  "categoria": "chocolates",
+  "resumo": "Trufa com cobertura lisa",
+  "descricao": "",
+  "imagem": "../../assets/uploads/trufa.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": true,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 2
+}

@@ -1,0 +1,13 @@
+{
+  "nome": "Barra Cacaudegran",
+  "categoria": "chocolates",
+  "resumo": "Chocolate em barra para degustar",
+  "descricao": "",
+  "imagem": "../../assets/uploads/barra.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": true,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 0
+}

@@ -1,0 +1,11 @@
+{
+  "nome": "Bebidas",
+  "titulo": "Para brindar e apreciar",
+  "categorias": [
+    "vinhos-espumantes",
+    "cafes-chas"
+  ],
+  "carrossel": "bebidas",
+  "no_menu": true,
+  "ordem": 1
+}

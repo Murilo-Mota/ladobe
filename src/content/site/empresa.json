@@ -1,0 +1,58 @@
+{
+  "nome_fantasia": "Empório Lado Bê",
+  "razao_social": "Empório Lado Bê",
+  "cnpj": "",
+  "slogan": "Chocolates, presentes e boas surpresas",
+  "logo": "",
+  "sobre_titulo": "Um empório para apreciar e presentear",
+  "sobre_texto": "Um empório pensado para quem aprecia bons sabores, momentos especiais e a arte de presentear.\n\nChocolate, bebidas e delícias em um só lugar.",
+  "sobre_imagem": "../../assets/uploads/emporio.jpg",
+  "mapa_url": "",
+  "telefones": [
+    {
+      "rotulo": "Loja",
+      "numero": "(48) 99812-6685",
+      "whatsapp": true,
+      "ativo": true
+    }
+  ],
+  "emails": [
+    {
+      "rotulo": "Atendimento",
+      "email": "contato@exemplo.com.br",
+      "ativo": true
+    }
+  ],
+  "enderecos": [
+    {
+      "rotulo": "Loja",
+      "logradouro": "Endereço a preencher",
+      "numero": "0",
+      "complemento": "",
+      "bairro": "Bairro",
+      "cidade": "Cidade",
+      "uf": "UF",
+      "cep": "",
+      "ativo": true
+    }
+  ],
+  "redes": [
+    {
+      "rede": "Instagram",
+      "url": "https://www.instagram.com/",
+      "ativo": true
+    }
+  ],
+  "horarios": [
+    {
+      "dias": "Segunda a Sexta",
+      "horario": "09:00h as 18:00h",
+      "ativo": true
+    },
+    {
+      "dias": "Sábado",
+      "horario": "09:00h as 13:00h",
+      "ativo": true
+    }
+  ]
+}

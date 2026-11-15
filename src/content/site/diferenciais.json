@@ -1,0 +1,28 @@
+{
+  "itens": [
+    {
+      "titulo": "Seleção Especial",
+      "descricao": "Produtos de qualidade e marcas reconhecidas",
+      "icone": "cacau",
+      "ativo": true
+    },
+    {
+      "titulo": "Presentes Memoráveis",
+      "descricao": "Combinações exclusivas e personalizadas",
+      "icone": "estrela",
+      "ativo": true
+    },
+    {
+      "titulo": "Experiência Completa",
+      "descricao": "Chocolate, bebidas e delícias em um só lugar",
+      "icone": "xicara",
+      "ativo": true
+    },
+    {
+      "titulo": "Para Todas as Ocasiões",
+      "descricao": "De um mimo especial a celebrações inesquecíveis",
+      "icone": "coracao",
+      "ativo": true
+    }
+  ]
+}

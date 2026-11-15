@@ -1,0 +1,24 @@
+{
+  "nome": "Contato",
+  "tamanho": "faixa",
+  "transicao": "fade",
+  "autoplay": true,
+  "intervalo": 6,
+  "ativo": true,
+  "banners": [
+    {
+      "imagem": "../../assets/uploads/principal_wQG4RUB.jpg",
+      "imagem_mobile": "",
+      "foco": "right center",
+      "sobretitulo": "Contato",
+      "titulo": "Estamos aqui",
+      "titulo_destaque": "para você",
+      "texto": "",
+      "texto_botao": "",
+      "link": "",
+      "ativo": true,
+      "inicio": "",
+      "fim": ""
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "assuntos": [
+    {
+      "nome": "Dúvidas sobre produtos",
+      "ativo": true
+    },
+    {
+      "nome": "Presentes e encomendas",
+      "ativo": true
+    },
+    {
+      "nome": "Parcerias",
+      "ativo": true
+    },
+    {
+      "nome": "Outros",
+      "ativo": true
+    }
+  ]
+}

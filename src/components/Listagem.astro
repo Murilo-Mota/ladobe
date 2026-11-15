@@ -1,0 +1,34 @@
+---
+// Lista de produtos com filtro por categoria, busca e "Carregar mais" (feitos no navegador por scripts/site.ts).
+import CartaoProduto from "./CartaoProduto.astro";
+import type { Categoria, ProdutoComCategoria } from "../lib/dados";
+
+interface Props { rotulo: string; titulo: string; categorias: Categoria[]; produtos: ProdutoComCategoria[] }
+const { rotulo, titulo, categorias, produtos } = Astro.props;
+---
+<section class="secao-creme" data-listagem data-por-pagina="12">
+  <img class="folha folha--dir" src="/img/folha-creme-dir.png" alt="">
+  <header class="secao-titulo">
+    <p class="entrelinhas">{rotulo}</p>
+    <h2>{titulo}</h2>
+  </header>
+
+  <form class="filtros" method="get" data-filtros>
+    <fieldset class="chips">
+      <legend class="sr">Categoria</legend>
+      <label class="chip"><input type="radio" name="categoria" value="" checked><span>Todos</span></label>
+      {categorias.map((c) => (
+        <label class="chip"><input type="radio" name="categoria" value={c.id}><span>{c.data.nome}</span></label>
+      ))}
+    </fieldset>
+    <input class="busca" type="search" name="q" placeholder="Buscar produto" aria-label="Buscar produto">
+  </form>
+
+  <div id="grade-produtos">
+    <div class="grade">
+      {produtos.map((p) => <CartaoProduto produto={p} filtro />)}
+      <div class="mais" data-mais hidden><button class="botao botao--vinho" type="button">Carregar mais</button></div>
+    </div>
+    <p class="vazio" data-vazio hidden={produtos.length > 0}>Nenhum produto encontrado.</p>
+  </div>
+</section>

@@ -1,0 +1,8 @@
+{
+  "nome": "Cafés & Chás",
+  "descricao": "Aromas especiais para o seu dia",
+  "icone": "folhas",
+  "imagem": "../../assets/uploads/cat-cafes.jpg",
+  "ordem": 2,
+  "ativo": true
+}

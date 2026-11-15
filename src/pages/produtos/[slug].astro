@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/Base.astro";
+import DetalheProduto from "../../components/DetalheProduto.astro";
+import { empresa, produtos, type ProdutoComCategoria } from "../../lib/dados";
+
+export async function getStaticPaths() {
+  return (await produtos()).map((produto) => ({ params: { slug: produto.id }, props: { produto } }));
+}
+const { produto } = Astro.props as { produto: ProdutoComCategoria };
+---
+<Base titulo={produto.data.nome} descricao={produto.data.resumo}>
+  <section class="secao-creme">
+    <div class="pagina-detalhe"><DetalheProduto produto={produto} empresa={await empresa()} /></div>
+  </section>
+</Base>

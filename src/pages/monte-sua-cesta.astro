@@ -1,0 +1,184 @@
+---
+// Monte sua Cesta: uma etapa por categoria com produtos disponíveis, depois "Tamanho e laço" e "Revisar".
+// A cesta fica no navegador do visitante (localStorage) e é enviada pelo WhatsApp — ver scripts/cesta.ts.
+import { getImage } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Carrossel from "../components/Carrossel.astro";
+import Icone from "../components/Icone.astro";
+import { categorias as carregarCategorias, empresa as carregarEmpresa, opcoesCesta, produtos } from "../lib/dados";
+import { reais, whatsappDigitos } from "../lib/formatos";
+
+const empresa = await carregarEmpresa();
+const { tamanhos, lacos } = await opcoesCesta();
+const itens = await Promise.all(
+  (await produtos((p) => p.data.disponivel_na_cesta)).map(async (p) => ({
+    ...p,
+    foto: (await getImage({ src: p.data.imagem, width: Math.min(p.data.imagem.width, 300), format: "webp" })).src,
+  })),
+);
+const categorias = (await carregarCategorias()).filter((c) => itens.some((p) => p.categoria.id === c.id));
+
+const etapas = [
+  ...categorias.map((c) => ({ slug: c.id, nome: c.data.nome, icone: c.data.icone, descricao: c.data.descricao })),
+  { slug: "cesta", nome: "Tamanho e laço", icone: "presente", descricao: "" },
+  { slug: "revisar", nome: "Revisar", icone: "estrela", descricao: "" },
+];
+const url = (slug: string) => `/monte-sua-cesta/?etapa=${slug}`;
+
+const dados = {
+  empresa: empresa.nome_fantasia,
+  whatsapp: empresa.whatsapp ? whatsappDigitos(empresa.whatsapp.numero) : null,
+  etapas: etapas.map(({ slug, nome }) => ({ slug, nome })),
+  categorias: categorias.map((c) => ({ id: c.id, nome: c.data.nome })),
+  produtos: itens.map((p) => ({ id: p.id, nome: p.data.nome, categoria: p.categoria.id, preco: p.data.preco ?? null, foto: p.foto })),
+  tamanhos: tamanhos.map((t) => ({ nome: t.nome, capacidade: t.capacidade ?? null, preco: t.preco ?? null })),
+  lacos: lacos.map((l) => ({ nome: l.nome, cor: l.cor })),
+};
+---
+<Base titulo="Monte sua Cesta">
+  <Carrossel id="monte-sua-cesta" />
+  <section class="secao-creme secao-creme--cesta">
+    <img class="folha folha--esq" src="/img/folha-creme-esq.png" alt="">
+    <header class="secao-titulo">
+      <p class="entrelinhas">Monte sua cesta</p>
+      <h2>Escolha cada detalhe do seu presente</h2>
+    </header>
+
+    <div id="montador" class="montador" data-montador>
+      <div id="cesta-etapa" class="montador__etapa">
+        <nav id="cesta-passos" class="passos" aria-label="Etapas">
+          <ol>
+            {etapas.map((e) => (
+            <li>
+              <a href={url(e.slug)} class="passo" data-ir={e.slug}>
+                <span class="passo__icone"><Icone nome={e.icone} /></span>
+                <span class="passo__nome">{e.nome}</span>
+                <span class="passo__qtd" data-qtd-categoria={e.slug} hidden></span>
+              </a>
+            </li>
+            ))}
+          </ol>
+        </nav>
+
+        {etapas.map((e, i) => (
+        <div data-etapa={e.slug} hidden={i > 0}>
+          <header class="etapa__topo">
+            <span class="etapa__icone"><Icone nome={e.icone} /></span>
+            <div>
+              <p class="etapa__numero">Etapa {i + 1} de {etapas.length}</p>
+              <h3>{e.nome}</h3>
+              {e.descricao && <p>{e.descricao}</p>}
+            </div>
+          </header>
+
+          {i < categorias.length && <>
+            <div class="itens-cesta">
+              {itens.filter((p) => p.categoria.id === e.slug).map((p) => (
+              <article class="item-cesta" data-item={p.id}>
+                <img src={p.foto} alt="" loading="lazy">
+                <div class="item-cesta__info">
+                  <h4>{p.data.nome}</h4>
+                  {p.data.resumo && <p>{p.data.resumo}</p>}
+                  {p.data.preco !== undefined && <strong>{reais(p.data.preco)}</strong>}
+                </div>
+                <div class="qtd">
+                  <button type="button" data-acao="menos" disabled aria-label={`Remover uma unidade de ${p.data.nome}`}>−</button>
+                  <output aria-live="polite" aria-label={`Quantidade de ${p.data.nome}`}>0</output>
+                  <button type="button" data-acao="mais" aria-label={`Adicionar uma unidade de ${p.data.nome}`}>+</button>
+                </div>
+              </article>
+              ))}
+            </div>
+            <div class="etapa__nav">
+              {i > 0 ? <a class="botao botao--contorno" href={url(etapas[i - 1].slug)} data-ir={etapas[i - 1].slug}>← Voltar</a> : <span></span>}
+              <a class="botao" href={url(etapas[i + 1].slug)} data-ir={etapas[i + 1].slug}>Avançar: {etapas[i + 1].nome} →</a>
+            </div>
+          </>}
+
+          {e.slug === "cesta" && (
+            <form class="opcoes" data-opcoes>
+              <fieldset>
+                <legend>Tamanho da cesta</legend>
+                <div class="tamanhos">
+                  {tamanhos.length ? tamanhos.map((t) => (
+                  <label class="tamanho">
+                    <input type="radio" name="tamanho" value={t.nome}>
+                    <span>
+                      <strong>{t.nome}</strong>
+                      {t.descricao && <small>{t.descricao}</small>}
+                      {t.capacidade && <small>Até {t.capacidade} itens</small>}
+                      {t.preco !== undefined && <em>{reais(t.preco)}</em>}
+                      {t.capacidade && <b class="tamanho__aviso" data-capacidade={t.capacidade} hidden></b>}
+                    </span>
+                  </label>
+                  )) : <p>Nenhum tamanho cadastrado.</p>}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Cor do laço</legend>
+                <div class="lacos">
+                  {lacos.length ? lacos.map((l) => (
+                  <label class="laco">
+                    <input type="radio" name="laco" value={l.nome}>
+                    <span class="laco__amostra" style={`--cor:${l.cor}`}></span>
+                    <span>{l.nome}</span>
+                  </label>
+                  )) : <p>Nenhuma cor cadastrada.</p>}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend><label for="obs">Observações adicionais</label></legend>
+                <textarea id="obs" name="obs" rows="4" maxlength="500" placeholder="Ex.: cartão com mensagem, restrições, data de entrega desejada"></textarea>
+              </fieldset>
+
+              <div class="etapa__nav">
+                {i > 0 ? <a class="botao botao--contorno" href={url(etapas[i - 1].slug)} data-ir={etapas[i - 1].slug}>← Voltar</a> : <span></span>}
+                <a class="botao" href={url("revisar")} data-ir="revisar">Avançar: Revisar →</a>
+              </div>
+            </form>
+          )}
+
+          {e.slug === "revisar" && <>
+            <div data-revisao-cheia hidden>
+              <div class="revisao" data-revisao></div>
+              <div class="etapa__nav">
+                <a class="botao botao--contorno" href={url("cesta")} data-ir="cesta">← Voltar</a>
+                <div class="etapa__acoes">
+                  <button class="link-limpar" type="button" data-limpar>Limpar cesta</button>
+                  {empresa.whatsapp
+                    ? <a class="botao botao--whats" href="#" target="_blank" rel="noopener" data-enviar>Enviar pelo WhatsApp</a>
+                    : <a class="botao" href="/contato/">Fale conosco</a>}
+                </div>
+              </div>
+            </div>
+            <div class="cesta-vazia" data-revisao-vazia>
+              <p>Sua cesta ainda está vazia.</p>
+              <a class="botao" href={url(etapas[0].slug)} data-ir={etapas[0].slug}>Começar a montar</a>
+            </div>
+          </>}
+        </div>
+        ))}
+      </div>
+
+      <aside id="cesta-resumo" class="resumo-cesta" aria-label="Resumo da cesta">
+        <h3><Icone nome="presente" /> Sua cesta</h3>
+        <ul class="resumo-cesta__itens" data-resumo-itens hidden></ul>
+        <p class="resumo-cesta__vazio" data-resumo-vazio>Adicione produtos com o botão +.</p>
+        <dl class="resumo-cesta__opcoes">
+          <dt>Tamanho</dt><dd data-resumo-tamanho>—</dd>
+          <dt>Laço</dt><dd data-resumo-laco>—</dd>
+        </dl>
+        <div class="resumo-cesta__total">
+          <span><strong class="resumo-cesta__numero" data-resumo-total>0</strong> <span data-resumo-rotulo>itens</span></span>
+          <span class="resumo-cesta__valor" data-resumo-valor hidden></span>
+        </div>
+        <p class="aviso aviso--mini" data-resumo-excede hidden></p>
+        <a class="botao resumo-cesta__revisar" href={url("revisar")} data-ir="revisar" data-resumo-revisar>Revisar cesta</a>
+      </aside>
+    </div>
+  </section>
+  <script type="application/json" id="dados-cesta" set:html={JSON.stringify(dados).replace(/</g, "\\u003c")}></script>
+  <script src="../scripts/cesta.ts"></script>
+</Base>

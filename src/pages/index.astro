@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Carrossel from "../components/Carrossel.astro";
+import CartaoProduto from "../components/CartaoProduto.astro";
+import Diferenciais from "../components/Diferenciais.astro";
+import Icone from "../components/Icone.astro";
+import { categorias as carregarCategorias, produtos } from "../lib/dados";
+
+const categorias = await carregarCategorias();
+const destaques = (await produtos((p) => p.data.destaque)).slice(0, 4);
+---
+<Base>
+  <Carrossel id="home" />
+
+  <section class="secao-creme">
+    <img class="folha folha--esq" src="/img/folha-creme-esq.png" alt="">
+    <img class="folha folha--dir" src="/img/folha-creme-dir.png" alt="">
+    <header class="secao-titulo">
+      <p class="entrelinhas">Nosso portfólio</p>
+      <h2>Sabores que combinam com cada momento</h2>
+    </header>
+    <div class="categorias">
+      {categorias.map((c) => (
+      <a class="categoria" href={`/produtos/?categoria=${c.id}`}>
+        <Image src={c.data.imagem} widths={[500, 1000]} sizes="(max-width: 700px) 100vw, 33vw" alt="" loading="lazy" format="webp" />
+        <div class="categoria__painel">
+          <span class="categoria__selo"><Icone nome={c.data.icone} /></span>
+          <h3>{c.data.nome}</h3>
+          <p>{c.data.descricao}</p>
+        </div>
+      </a>
+      ))}
+    </div>
+
+    {destaques.length > 0 && <>
+    <header class="secao-titulo secao-titulo--2">
+      <p class="entrelinhas">Destaques</p>
+      <h2>Escolhas especiais da casa</h2>
+    </header>
+    <div class="grade grade--destaques">
+      {destaques.map((p) => <CartaoProduto produto={p} />)}
+    </div>
+    </>}
+  </section>
+
+  <Diferenciais />
+</Base>

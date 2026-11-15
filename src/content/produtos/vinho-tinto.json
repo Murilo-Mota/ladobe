@@ -1,0 +1,13 @@
+{
+  "nome": "Vinho Tinto",
+  "categoria": "vinhos-espumantes",
+  "resumo": "Rótulo selecionado para brindar",
+  "descricao": "",
+  "imagem": "../../assets/uploads/vinho-taca.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": true,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 5
+}

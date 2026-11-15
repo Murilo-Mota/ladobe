@@ -1,0 +1,8 @@
+{
+  "nome": "Geleias & Delícias Gourmet",
+  "descricao": "Sabores artesanais que surpreendem",
+  "icone": "pote",
+  "imagem": "../../assets/uploads/cat-geleias.jpg",
+  "ordem": 3,
+  "ativo": true
+}

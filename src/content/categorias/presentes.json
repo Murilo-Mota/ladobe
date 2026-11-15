@@ -1,0 +1,8 @@
+{
+  "nome": "Presentes",
+  "descricao": "Kits e combinações para todas as ocasiões",
+  "icone": "presente",
+  "imagem": "../../assets/uploads/cat-presentes.jpg",
+  "ordem": 4,
+  "ativo": true
+}

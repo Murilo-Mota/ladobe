@@ -1,0 +1,37 @@
+---
+import { getImage } from "astro:assets";
+import Texto from "./Texto.astro";
+import type { ProdutoComCategoria, Empresa } from "../lib/dados";
+import { linkWhatsapp, reais } from "../lib/formatos";
+
+interface Props { produto: ProdutoComCategoria; empresa: Empresa }
+const { produto: p, empresa } = Astro.props;
+const fotos = await Promise.all(
+  [p.data.imagem, ...p.data.imagens].map(async (src) => ({
+    grande: await getImage({ src, width: Math.min(src.width, 1200), format: "webp", quality: 84 }),
+    mini: await getImage({ src, width: Math.min(src.width, 200), format: "webp" }),
+  })),
+);
+---
+<div class="detalhe">
+  <div class="detalhe__galeria" data-galeria>
+    <img class="detalhe__principal" data-galeria-principal src={fotos[0].grande.src} alt={p.data.nome}
+      width={fotos[0].grande.attributes.width} height={fotos[0].grande.attributes.height} />
+    {fotos.length > 1 && (
+    <div class="detalhe__miniaturas">
+      {fotos.map((f, i) => (
+        <button type="button" data-galeria-mini={f.grande.src} aria-label={`Imagem ${i + 1}`}><img src={f.mini.src} alt="" loading="lazy" /></button>
+      ))}
+    </div>
+    )}
+  </div>
+  <div class="detalhe__info">
+    <p class="sobretitulo sobretitulo--escuro">{p.categoria.data.nome}</p>
+    <h2>{p.data.nome}</h2>
+    {p.data.preco !== undefined && <p class="detalhe__preco">{reais(p.data.preco)}</p>}
+    {p.data.descricao ? <Texto texto={p.data.descricao} /> : p.data.resumo && <p>{p.data.resumo}</p>}
+    {empresa.whatsapp
+      ? <a class="botao botao--vinho" href={linkWhatsapp(empresa.whatsapp.numero, `Olá! Gostaria de saber mais sobre: ${p.data.nome}`)} target="_blank" rel="noopener">Consultar pelo WhatsApp</a>
+      : <a class="botao botao--vinho" href="/contato/">Fale conosco</a>}
+  </div>
+</div>

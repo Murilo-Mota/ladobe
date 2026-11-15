@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets";
+import type { ProdutoComCategoria } from "../lib/dados";
+import { reais } from "../lib/formatos";
+
+interface Props { produto: ProdutoComCategoria; filtro?: boolean }
+const { produto: p, filtro = false } = Astro.props;
+const url = `/produtos/${p.id}/`;
+// Texto normalizado para a busca no navegador (sem acentos, minúsculo).
+const busca = filtro
+  ? [p.data.nome, p.data.resumo, p.data.descricao].join(" ").normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase()
+  : undefined;
+---
+<article class="produto" data-produto={filtro ? "" : undefined} data-categoria={filtro ? p.categoria.id : undefined} data-busca={busca}>
+  <a href={url} data-modal-produto>
+    <div class="produto__foto"><Image src={p.data.imagem} widths={[400, 700]} sizes="(max-width: 700px) 50vw, 25vw" alt="" loading="lazy" format="webp" /></div>
+    <div class="produto__info">
+      <span>{p.categoria.data.nome}</span>
+      <h3>{p.data.nome}</h3>
+      {p.data.resumo && <p>{p.data.resumo}</p>}
+      {p.data.preco !== undefined && <strong>{reais(p.data.preco)}</strong>}
+    </div>
+  </a>
+</article>

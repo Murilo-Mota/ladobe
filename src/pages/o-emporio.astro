@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Carrossel from "../components/Carrossel.astro";
+import Diferenciais from "../components/Diferenciais.astro";
+import Texto from "../components/Texto.astro";
+import { empresa as carregarEmpresa } from "../lib/dados";
+const empresa = await carregarEmpresa();
+---
+<Base titulo="O Empório">
+  <Carrossel id="o-emporio" />
+  <section class="secao-creme">
+    <img class="folha folha--dir" src="/img/folha-creme-dir.png" alt="">
+    <div class="sobre">
+      {empresa.sobre_imagem && <Image class="sobre__imagem" src={empresa.sobre_imagem} widths={[800, 1600]} sizes="(max-width: 900px) 100vw, 50vw" alt="" format="webp" />}
+      <div>
+        <p class="sobretitulo sobretitulo--escuro">O Empório</p>
+        <h2>{empresa.sobre_titulo || empresa.nome_fantasia}</h2>
+        <Texto texto={empresa.sobre_texto} />
+        <a class="botao botao--vinho" href="/produtos/">Ver produtos</a>
+      </div>
+    </div>
+  </section>
+  <Diferenciais />
+</Base>

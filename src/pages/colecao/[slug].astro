@@ -1,0 +1,19 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Carrossel from "../../components/Carrossel.astro";
+import Listagem from "../../components/Listagem.astro";
+import { categorias as todasCategorias, produtos } from "../../lib/dados";
+
+export async function getStaticPaths() {
+  return (await getCollection("colecoes")).map((colecao) => ({ params: { slug: colecao.id }, props: { colecao } }));
+}
+const { colecao } = Astro.props as { colecao: CollectionEntry<"colecoes"> };
+const ids = new Set(colecao.data.categorias.map((c) => c.id));
+const categorias = (await todasCategorias()).filter((c) => ids.has(c.id));
+const itens = await produtos((p) => ids.has(p.data.categoria.id));
+---
+<Base titulo={colecao.data.nome}>
+  <Carrossel id={colecao.data.carrossel?.id} />
+  <Listagem rotulo={colecao.data.nome} titulo={colecao.data.titulo || "Conheça nossa seleção"} categorias={categorias} produtos={itens} />
+</Base>

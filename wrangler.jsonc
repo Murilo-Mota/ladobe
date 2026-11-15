@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "emporio-lado-be",
+  // "main" e "assets" são preenchidos pelo @astrojs/cloudflare no build.
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  "vars": {
+    // Remetente das mensagens do formulário: precisa ser um endereço do seu domínio no Cloudflare.
+    "CONTATO_REMETENTE": "site@emporioladobe.com.br",
+    // Quem recebe as mensagens. Precisa ser igual ao destination_address do send_email abaixo
+    // e estar verificado em Email Routing → Destination addresses.
+    "CONTATO_DESTINO": "contato@emporioladobe.com.br"
+  },
+
+  // Envio das mensagens do formulário de contato (Cloudflare Email Routing).
+  "send_email": [
+    { "name": "EMAIL", "destination_address": "contato@emporioladobe.com.br" }
+  ]
+
+  // Segredos (não ficam neste arquivo): defina no painel ou com
+  //   npx wrangler secret put GITHUB_CLIENT_ID
+  //   npx wrangler secret put GITHUB_CLIENT_SECRET
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Administração · Empório Lado Bê</title>
+  <link rel="icon" href="/img/favicon.png">
+</head>
+<body>
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="https://unpkg.com/decap-cms@3.17.3/dist/decap-cms.js"></script>
+  <script>
+    // O restante da configuração está em config.yml (nesta mesma pasta).
+    CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "Murilo-Mota/ladobe", // repositório do GitHub onde o conteúdo é salvo
+          branch: "main",
+          base_url: location.origin,            // o login usa /api/auth deste mesmo site
+          auth_endpoint: "api/auth/",
+          commit_messages: {
+            create: "Cria {{collection}} “{{slug}}”",
+            update: "Atualiza {{collection}} “{{slug}}”",
+            delete: "Remove {{collection}} “{{slug}}”",
+            uploadMedia: "Envia imagem “{{path}}”",
+            deleteMedia: "Remove imagem “{{path}}”",
+          },
+        },
+      },
+    });
+    CMS.registerPreviewStyle("/admin/previa.css");
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+---
+import "../styles/site.css";
+import { getImage } from "astro:assets";
+import Icone from "../components/Icone.astro";
+import { colecoesMenu, empresa as carregarEmpresa } from "../lib/dados";
+import { digitos, linkWhatsapp } from "../lib/formatos";
+
+interface Props { titulo?: string; descricao?: string }
+const empresa = await carregarEmpresa();
+const menu = await colecoesMenu();
+const { titulo, descricao = empresa.slogan } = Astro.props;
+const caminho = Astro.url.pathname;
+const atual = (url: string, prefixo = false) => ((prefixo ? caminho.startsWith(url) : caminho === url) ? "page" : undefined);
+const logo = empresa.logo ? (await getImage({ src: empresa.logo, width: Math.min(empresa.logo.width, 800), format: "webp" })).src : "/img/logo-lado-be.png";
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titulo ? `${titulo} · ${empresa.nome_fantasia}` : empresa.nome_fantasia}</title>
+  <meta name="description" content={descricao}>
+  <link rel="icon" href="/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="../scripts/site.ts"></script>
+</head>
+<body>
+  <div id="carregando" class="carregando" aria-hidden="true"></div>
+
+  <header class="topo" data-topo>
+    <img class="topo__folha" src="/img/folha-topo.png" alt="">
+    <div class="topo__interno">
+      <a class="topo__logo" href="/">
+        <img src={logo} alt={empresa.nome_fantasia} width="386" height="76">
+      </a>
+      <button class="topo__alternar" type="button" data-menu-alternar aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="menu" class="menu" aria-label="Principal">
+        <a href="/" aria-current={atual("/")}>Home</a>
+        <a href="/produtos/" aria-current={atual("/produtos/", true)}>Produtos</a>
+        {menu.map((c) => <a href={`/colecao/${c.id}/`} aria-current={atual(`/colecao/${c.id}/`)}>{c.data.nome}</a>)}
+        <a class="menu__cesta" href="/monte-sua-cesta/" aria-current={atual("/monte-sua-cesta/")}>Monte sua Cesta</a>
+        <a href="/o-emporio/" aria-current={atual("/o-emporio/")}>O Empório</a>
+        <a href="/contato/" aria-current={atual("/contato/")}>Contato</a>
+      </nav>
+      <div class="topo__ornamento" aria-hidden="true"><i></i><Icone nome="estrela" /><i></i></div>
+    </div>
+  </header>
+
+  <main><slot /></main>
+
+  <footer class="rodape">
+    <img class="rodape__folha" src="/img/folha-rodape.png" alt="">
+    <div class="rodape__grade">
+      <div>
+        <img class="rodape__logo" src={logo} alt={empresa.nome_fantasia} loading="lazy">
+        {(empresa.razao_social || empresa.cnpj) && (
+          <p class="rodape__legal">{empresa.razao_social}{empresa.cnpj && <><br />CNPJ {empresa.cnpj}</>}</p>
+        )}
+      </div>
+      {(empresa.telefones.length > 0 || empresa.emails.length > 0) && (
+      <div>
+        <h2>Fale conosco</h2>
+        <ul>
+          {empresa.telefones.map((t) => <li><a href={`tel:${digitos(t.numero)}`}>{t.numero}</a></li>)}
+          {empresa.emails.map((e) => <li><a href={`mailto:${e.email}`}>{e.email}</a></li>)}
+        </ul>
+      </div>
+      )}
+      {empresa.horarios.length > 0 && (
+      <div>
+        <h2>Horários</h2>
+        <ul>{empresa.horarios.map((h) => <li>{h.dias}: {h.horario}</li>)}</ul>
+      </div>
+      )}
+      {(empresa.enderecos.length > 0 || empresa.redes.length > 0) && (
+      <div>
+        <h2>Visite</h2>
+        <ul>
+          {empresa.enderecos.map((e) => (
+            <li>{[e.logradouro, e.numero, e.complemento].filter(Boolean).join(", ")}<br />{[e.bairro, `${e.cidade}/${e.uf}`, e.cep].filter(Boolean).join(" · ")}</li>
+          ))}
+          {empresa.redes.map((r) => <li><a href={r.url} target="_blank" rel="noopener">{r.rede}</a></li>)}
+        </ul>
+      </div>
+      )}
+    </div>
+    <p class="rodape__base">© <span data-ano>{new Date().getFullYear()}</span> {empresa.nome_fantasia}</p>
+  </footer>
+
+  {empresa.whatsapp && (
+    <a class="whats" href={linkWhatsapp(empresa.whatsapp.numero)} target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.700-4.800A9 9 0 1 1 8 19.500L3 21Z"/><path d="M9 8.500c0 4 2.500 6.500 6.500 6.500l1-2-2.500-1-1 1c-1-.5-1.500-1-2-2l1-1-1-2.500-2 1Z"/></svg>
+    </a>
+  )}
+
+  <dialog id="modal" class="modal" aria-label="Detalhes do produto"></dialog>
+</body>
+</html>

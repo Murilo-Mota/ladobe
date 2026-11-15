@@ -1,0 +1,8 @@
+{
+  "nome": "Vinhos & Espumantes",
+  "descricao": "Rótulos selecionados para brindar",
+  "icone": "taca",
+  "imagem": "../../assets/uploads/cat-vinhos.jpg",
+  "ordem": 1,
+  "ativo": true
+}

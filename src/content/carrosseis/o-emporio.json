@@ -1,0 +1,24 @@
+{
+  "nome": "O Empório",
+  "tamanho": "faixa",
+  "transicao": "fade",
+  "autoplay": true,
+  "intervalo": 6,
+  "ativo": true,
+  "banners": [
+    {
+      "imagem": "../../assets/uploads/banners-emporio.jpg",
+      "imagem_mobile": "",
+      "foco": "right center",
+      "sobretitulo": "O Empório",
+      "titulo": "Bons sabores,",
+      "titulo_destaque": "boas surpresas",
+      "texto": "",
+      "texto_botao": "",
+      "link": "",
+      "ativo": true,
+      "inicio": "",
+      "fim": ""
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "nome": "Tablete Especial",
+  "categoria": "chocolates",
+  "resumo": "Tablete para compartilhar",
+  "descricao": "",
+  "imagem": "../../assets/uploads/tablete.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": false,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 1
+}

@@ -1,0 +1,18 @@
+---
+import Icone from "./Icone.astro";
+import { diferenciais } from "../lib/dados";
+const itens = await diferenciais();
+---
+{itens.length > 0 && (
+<section class="diferenciais" aria-label="Diferenciais">
+  {itens.map((d) => (
+  <div class="diferencial">
+    <Icone nome={d.icone} />
+    <div>
+      <h3>{d.titulo}</h3>
+      <p>{d.descricao}</p>
+    </div>
+  </div>
+  ))}
+</section>
+)}

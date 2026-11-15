@@ -1,0 +1,13 @@
+{
+  "nome": "Kit Boas Surpresas",
+  "categoria": "presentes",
+  "resumo": "Combinação para presentear",
+  "descricao": "",
+  "imagem": "../../assets/uploads/kit.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": false,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 14
+}

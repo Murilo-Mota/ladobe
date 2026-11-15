@@ -1,0 +1,13 @@
+{
+  "nome": "Caixa Presente Lado Bê",
+  "categoria": "presentes",
+  "resumo": "Caixa assinada com laço dourado",
+  "descricao": "",
+  "imagem": "../../assets/uploads/caixa.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": true,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 13
+}

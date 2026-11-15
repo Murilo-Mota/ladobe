@@ -1,0 +1,13 @@
+{
+  "nome": "Café em Grãos",
+  "categoria": "cafes-chas",
+  "resumo": "Grãos selecionados",
+  "descricao": "",
+  "imagem": "../../assets/uploads/graos.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": false,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 9
+}

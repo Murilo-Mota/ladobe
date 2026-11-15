@@ -1,0 +1,24 @@
+{
+  "nome": "Bebidas",
+  "tamanho": "faixa",
+  "transicao": "fade",
+  "autoplay": true,
+  "intervalo": 6,
+  "ativo": true,
+  "banners": [
+    {
+      "imagem": "../../assets/uploads/bebidas.jpg",
+      "imagem_mobile": "",
+      "foco": "right center",
+      "sobretitulo": "Bebidas",
+      "titulo": "Rótulos para",
+      "titulo_destaque": "brindar",
+      "texto": "",
+      "texto_botao": "",
+      "link": "",
+      "ativo": true,
+      "inicio": "",
+      "fim": ""
+    }
+  ]
+}

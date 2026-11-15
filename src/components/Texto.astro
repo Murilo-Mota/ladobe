@@ -1,0 +1,6 @@
+---
+// Equivalente ao filtro |linebreaks do Django.
+import { paragrafos } from "../lib/formatos";
+interface Props { texto: string }
+---
+{paragrafos(Astro.props.texto).map((linhas) => <p>{linhas.map((l, i) => <>{i > 0 && <br />}{l}</>)}</p>)}

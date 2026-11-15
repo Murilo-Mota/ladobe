@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import Carrossel from "../../components/Carrossel.astro";
+import Listagem from "../../components/Listagem.astro";
+import { categorias, produtos } from "../../lib/dados";
+---
+<Base titulo="Produtos">
+  <Carrossel id="produtos" />
+  <Listagem rotulo="Produtos" titulo="Conheça nossa seleção" categorias={await categorias()} produtos={await produtos()} />
+</Base>

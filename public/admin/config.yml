@@ -1,0 +1,287 @@
+# Painel de conteúdo do site (Decap CMS). O backend do GitHub é definido em index.html.
+# Para editar localmente sem login: rode "npm run cms" e "npm run dev" e abra http://localhost:4321/admin/
+local_backend: true
+locale: pt
+site_url: /
+display_url: /
+logo_url: /img/logo-simbolo.png
+
+# Imagens: envie a original; o site gera versões WebP otimizadas no build.
+media_folder: src/assets/uploads
+public_folder: ../../assets/uploads
+
+collections:
+  # ---------------------------------------------------------------- Catálogo
+  - name: produtos
+    label: Produtos
+    label_singular: Produto
+    description: Itens da vitrine. Desmarque "Ativo" para esconder sem apagar.
+    folder: src/content/produtos
+    format: json
+    extension: json
+    create: true
+    identifier_field: nome
+    slug: "{{slug}}"
+    summary: "{{nome}}"
+    sortable_fields: [nome, ordem]
+    view_groups:
+      - { label: Categoria, field: categoria }
+    view_filters:
+      - { label: Destaques, field: destaque, pattern: true }
+      - { label: Inativos, field: ativo, pattern: false }
+    fields:
+      - { label: Nome, name: nome, widget: string }
+      - label: Categoria
+        name: categoria
+        widget: relation
+        collection: categorias
+        value_field: "{{slug}}"
+        search_fields: [nome]
+        display_fields: [nome]
+      - { label: Resumo, name: resumo, widget: string, required: false, hint: "Uma linha exibida no cartão do produto." }
+      - { label: Descrição, name: descricao, widget: text, required: false }
+      - { label: Imagem principal, name: imagem, widget: image, choose_url: false, hint: "Recomendado: quadrada, 1000 × 1000 px." }
+      - label: Imagens adicionais
+        name: imagens
+        widget: list
+        required: false
+        field: { label: Imagem, name: imagem, widget: image, choose_url: false }
+      - { label: Preço, name: preco, widget: number, value_type: float, step: 0.01, min: 0, required: false, hint: "Opcional. Vazio: o preço não aparece." }
+      - { label: Destaque na página inicial, name: destaque, widget: boolean, default: false }
+      - { label: Disponível no Monte sua Cesta, name: disponivel_na_cesta, widget: boolean, default: true }
+      - &ativo { label: Ativo, name: ativo, widget: boolean, default: true }
+      - &ordem { label: Ordem, name: ordem, widget: number, value_type: int, default: 0, hint: "Menor aparece primeiro." }
+
+  - name: categorias
+    label: Categorias
+    label_singular: Categoria
+    folder: src/content/categorias
+    format: json
+    extension: json
+    create: true
+    identifier_field: nome
+    slug: "{{slug}}"
+    sortable_fields: [nome, ordem]
+    fields:
+      - { label: Nome, name: nome, widget: string }
+      - { label: Descrição, name: descricao, widget: string, required: false }
+      - &icone
+        label: Ícone
+        name: icone
+        widget: select
+        options:
+          - { label: Cacau, value: cacau }
+          - { label: Taça, value: taca }
+          - { label: Folhas, value: folhas }
+          - { label: Pote, value: pote }
+          - { label: Presente, value: presente }
+          - { label: Estrela, value: estrela }
+          - { label: Xícara, value: xicara }
+          - { label: Coração, value: coracao }
+      - { label: Imagem, name: imagem, widget: image, choose_url: false, hint: "Recomendado: 800 × 500 px." }
+      - *ordem
+      - *ativo
+
+  - name: colecoes
+    label: Coleções (menu)
+    label_singular: Coleção
+    description: Cada coleção vira um item do menu que reúne categorias, como Presentes e Bebidas.
+    folder: src/content/colecoes
+    format: json
+    extension: json
+    create: true
+    identifier_field: nome
+    slug: "{{slug}}"
+    fields:
+      - { label: Nome no menu, name: nome, widget: string }
+      - { label: Título da página, name: titulo, widget: string, required: false }
+      - label: Categorias
+        name: categorias
+        widget: relation
+        collection: categorias
+        value_field: "{{slug}}"
+        search_fields: [nome]
+        display_fields: [nome]
+        multiple: true
+      - label: Carrossel do topo
+        name: carrossel
+        widget: relation
+        collection: carrosseis
+        value_field: "{{slug}}"
+        search_fields: [nome]
+        display_fields: [nome]
+        required: false
+      - { label: Exibir no menu, name: no_menu, widget: boolean, default: true }
+      - *ordem
+
+  # ---------------------------------------------------------------- Banners
+  - name: carrosseis
+    label: Banners e carrosséis
+    label_singular: Carrossel
+    description: >-
+      Cada página usa o carrossel com o seu identificador (home, produtos, monte-sua-cesta, o-emporio, contato).
+      As coleções do menu escolhem o seu carrossel na própria coleção.
+    folder: src/content/carrosseis
+    format: json
+    extension: json
+    create: true
+    identifier_field: nome
+    slug: "{{slug}}"
+    fields:
+      - { label: Nome, name: nome, widget: string }
+      - label: Tamanho
+        name: tamanho
+        widget: select
+        default: hero
+        options: [{ label: "Grande (página inicial)", value: hero }, { label: "Faixa (páginas internas)", value: faixa }]
+      - label: Transição
+        name: transicao
+        widget: select
+        default: fade
+        options: [{ label: Dissolver, value: fade }, { label: Deslizar, value: slide }]
+      - { label: Avançar automaticamente, name: autoplay, widget: boolean, default: true }
+      - { label: Tempo de cada banner (segundos), name: intervalo, widget: number, value_type: int, min: 2, max: 30, default: 6 }
+      - *ativo
+      - label: Banners
+        name: banners
+        widget: list
+        label_singular: banner
+        summary: "{{fields.sobretitulo}} {{fields.titulo}} {{fields.titulo_destaque}}"
+        hint: Arraste para mudar a ordem. Um banner sem textos é exibido como arte pronta; se tiver link, o banner inteiro fica clicável.
+        fields:
+          - { label: Imagem (computador), name: imagem, widget: image, choose_url: false, hint: "Recomendado: 1920 × 720 px." }
+          - { label: Imagem (celular), name: imagem_mobile, widget: image, choose_url: false, required: false, hint: "Opcional. Recomendado: 900 × 1100 px." }
+          - label: Ponto de foco
+            name: foco
+            widget: select
+            default: center
+            hint: Parte da imagem preservada quando a tela corta as laterais.
+            options:
+              - { label: Centro, value: center }
+              - { label: Direita, value: right center }
+              - { label: Esquerda, value: left center }
+              - { label: Topo, value: center top }
+              - { label: Base, value: center bottom }
+          - { label: Sobretítulo, name: sobretitulo, widget: string, required: false }
+          - { label: Título, name: titulo, widget: string, required: false, hint: "Deixe vazio em banners com a arte já pronta na imagem." }
+          - { label: Título em destaque, name: titulo_destaque, widget: string, required: false, hint: "Aparece em itálico dourado, depois do título." }
+          - { label: Texto, name: texto, widget: string, required: false }
+          - { label: Texto do botão, name: texto_botao, widget: string, required: false }
+          - { label: Link, name: link, widget: string, required: false, hint: "Endereço interno (/produtos/) ou completo (https://...)." }
+          - *ativo
+          - { label: Exibir a partir de, name: inicio, widget: datetime, required: false }
+          - { label: Exibir até, name: fim, widget: datetime, required: false }
+
+  # ---------------------------------------------------------------- Empresa e configurações
+  - name: site
+    label: Empresa e configurações
+    files:
+      - name: empresa
+        label: Dados da empresa
+        file: src/content/site/empresa.json
+        fields:
+          - { label: Nome fantasia, name: nome_fantasia, widget: string }
+          - { label: Razão social, name: razao_social, widget: string, required: false }
+          - { label: CNPJ, name: cnpj, widget: string, required: false }
+          - { label: Slogan, name: slogan, widget: string, required: false, hint: "Também usado como descrição do site no Google." }
+          - { label: Logo, name: logo, widget: image, choose_url: false, required: false, hint: "PNG com fundo transparente. Vazio: usa a logo oficial do projeto." }
+          - { label: Título da página O Empório, name: sobre_titulo, widget: string, required: false }
+          - { label: Texto da página O Empório, name: sobre_texto, widget: text, required: false, hint: "Deixe uma linha em branco entre parágrafos." }
+          - { label: Imagem da página O Empório, name: sobre_imagem, widget: image, choose_url: false, required: false }
+          - { label: URL de incorporação do mapa, name: mapa_url, widget: string, required: false, hint: "Google Maps → Compartilhar → Incorporar um mapa → copie somente o endereço do atributo src." }
+          - label: Telefones
+            name: telefones
+            widget: list
+            summary: "{{fields.rotulo}}: {{fields.numero}}"
+            fields:
+              - { label: Rótulo, name: rotulo, widget: string, hint: "Ex.: Loja, Comercial, Encomendas." }
+              - { label: Número, name: numero, widget: string, hint: "Com DDD. Ex.: (11) 99999-0000." }
+              - { label: É WhatsApp, name: whatsapp, widget: boolean, default: false, hint: "O primeiro marcado recebe as cestas e o botão flutuante." }
+              - *ativo
+          - label: E-mails
+            name: emails
+            widget: list
+            summary: "{{fields.rotulo}}: {{fields.email}}"
+            fields:
+              - { label: Rótulo, name: rotulo, widget: string, hint: "Ex.: Atendimento, Financeiro." }
+              - { label: E-mail, name: email, widget: string }
+              - *ativo
+          - label: Endereços
+            name: enderecos
+            widget: list
+            summary: "{{fields.rotulo}}: {{fields.logradouro}}, {{fields.numero}}"
+            fields:
+              - { label: Rótulo, name: rotulo, widget: string, default: Loja }
+              - { label: Logradouro, name: logradouro, widget: string }
+              - { label: Número, name: numero, widget: string }
+              - { label: Complemento, name: complemento, widget: string, required: false }
+              - { label: Bairro, name: bairro, widget: string }
+              - { label: Cidade, name: cidade, widget: string }
+              - { label: UF, name: uf, widget: string }
+              - { label: CEP, name: cep, widget: string, required: false }
+              - *ativo
+          - label: Redes sociais
+            name: redes
+            widget: list
+            summary: "{{fields.rede}}"
+            fields:
+              - { label: Rede, name: rede, widget: select, options: [Instagram, Facebook, TikTok, YouTube, Pinterest] }
+              - { label: Endereço, name: url, widget: string, hint: "https://..." }
+              - *ativo
+          - label: Horários de funcionamento
+            name: horarios
+            widget: list
+            summary: "{{fields.dias}}: {{fields.horario}}"
+            fields:
+              - { label: Dias, name: dias, widget: string, hint: "Ex.: Segunda a sexta." }
+              - { label: Horário, name: horario, widget: string, hint: "Ex.: 9h às 19h, ou Fechado." }
+              - *ativo
+
+      - name: diferenciais
+        label: Diferenciais (faixa)
+        file: src/content/site/diferenciais.json
+        fields:
+          - label: Diferenciais
+            name: itens
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Descrição, name: descricao, widget: string }
+              - *icone
+              - *ativo
+
+      - name: contato
+        label: Assuntos do formulário de contato
+        file: src/content/site/contato.json
+        fields:
+          - label: Assuntos
+            name: assuntos
+            widget: list
+            summary: "{{fields.nome}}"
+            fields:
+              - { label: Nome, name: nome, widget: string }
+              - *ativo
+
+      - name: cesta
+        label: Monte sua Cesta (tamanhos e laços)
+        file: src/content/site/cesta.json
+        fields:
+          - label: Tamanhos de cesta
+            name: tamanhos
+            widget: list
+            summary: "{{fields.nome}}"
+            fields:
+              - { label: Nome, name: nome, widget: string }
+              - { label: Descrição, name: descricao, widget: string, required: false }
+              - { label: Capacidade (itens), name: capacidade, widget: number, value_type: int, min: 1, required: false, hint: "Quantidade máxima sugerida. Vazio: sem limite." }
+              - { label: Preço, name: preco, widget: number, value_type: float, step: 0.01, min: 0, required: false, hint: "Opcional. Somado ao valor estimado." }
+              - *ativo
+          - label: Cores de laço
+            name: lacos
+            widget: list
+            summary: "{{fields.nome}}"
+            fields:
+              - { label: Nome, name: nome, widget: string }
+              - { label: Cor, name: cor, widget: color, default: "#c9a14a" }
+              - *ativo

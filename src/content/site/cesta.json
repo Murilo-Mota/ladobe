@@ -1,0 +1,52 @@
+{
+  "tamanhos": [
+    {
+      "nome": "Pequena",
+      "descricao": "Um mimo delicado",
+      "capacidade": 4,
+      "preco": null,
+      "ativo": true
+    },
+    {
+      "nome": "Média",
+      "descricao": "Para presentear com variedade",
+      "capacidade": 8,
+      "preco": null,
+      "ativo": true
+    },
+    {
+      "nome": "Grande",
+      "descricao": "Para celebrações especiais",
+      "capacidade": 12,
+      "preco": null,
+      "ativo": true
+    }
+  ],
+  "lacos": [
+    {
+      "nome": "Dourado",
+      "cor": "#c9a14a",
+      "ativo": true
+    },
+    {
+      "nome": "Vinho",
+      "cor": "#6b1a1f",
+      "ativo": true
+    },
+    {
+      "nome": "Champanhe",
+      "cor": "#e8d3b0",
+      "ativo": true
+    },
+    {
+      "nome": "Rosé",
+      "cor": "#d9a3a0",
+      "ativo": true
+    },
+    {
+      "nome": "Chocolate",
+      "cor": "#5a3420",
+      "ativo": true
+    }
+  ]
+}

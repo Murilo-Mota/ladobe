@@ -1,0 +1,24 @@
+{
+  "nome": "Produtos",
+  "tamanho": "faixa",
+  "transicao": "fade",
+  "autoplay": true,
+  "intervalo": 6,
+  "ativo": true,
+  "banners": [
+    {
+      "imagem": "../../assets/uploads/chocolates_5xxaKLU.jpg",
+      "imagem_mobile": "",
+      "foco": "right center",
+      "sobretitulo": "Portfólio",
+      "titulo": "Sabores para",
+      "titulo_destaque": "cada momento",
+      "texto": "",
+      "texto_botao": "",
+      "link": "",
+      "ativo": true,
+      "inicio": "",
+      "fim": ""
+    }
+  ]
+}

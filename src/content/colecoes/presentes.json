@@ -1,0 +1,10 @@
+{
+  "nome": "Presentes",
+  "titulo": "Para surpreender quem você ama",
+  "categorias": [
+    "presentes"
+  ],
+  "carrossel": "presentes",
+  "no_menu": true,
+  "ordem": 0
+}

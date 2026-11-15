@@ -1,0 +1,24 @@
+{
+  "nome": "Presentes",
+  "tamanho": "faixa",
+  "transicao": "fade",
+  "autoplay": true,
+  "intervalo": 6,
+  "ativo": true,
+  "banners": [
+    {
+      "imagem": "../../assets/uploads/presentes_JXD1FXD.jpg",
+      "imagem_mobile": "",
+      "foco": "right center",
+      "sobretitulo": "Presentes",
+      "titulo": "A arte de",
+      "titulo_destaque": "presentear",
+      "texto": "",
+      "texto_botao": "",
+      "link": "",
+      "ativo": true,
+      "inicio": "",
+      "fim": ""
+    }
+  ]
+}

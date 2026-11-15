@@ -1,0 +1,13 @@
+{
+  "nome": "Bombom com Avelãs",
+  "categoria": "chocolates",
+  "resumo": "Bombom coberto de avelãs",
+  "descricao": "",
+  "imagem": "../../assets/uploads/bombom-avela.jpg",
+  "imagens": [],
+  "preco": null,
+  "destaque": false,
+  "disponivel_na_cesta": true,
+  "ativo": true,
+  "ordem": 4
+}
