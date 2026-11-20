@@ -1,13 +1,13 @@
 {
-  "nome": "Espumante",
-  "categoria": "vinhos-espumantes",
-  "resumo": "Para celebrar boas surpresas",
-  "descricao": "",
-  "imagem": "../../assets/uploads/espumante.jpg",
   "imagens": [],
-  "preco": null,
   "destaque": false,
-  "disponivel_na_cesta": true,
+  "descricao": "De cor Amarelo palha e perlage fino e persistente, No nariz, mostra-se fragrante e harmonioso, com notas frutadas de maçã e delicados aromas florais de flores brancas, Em boca, revela sabor cheio e fresco, levemente cítrico e frutado, com perfil seco e final marcado por agradável nota de amêndoas, \nHarmoniza perfeitamente com antepastos, risotos, carnes brancas, crustáceos e peixes crus ou fritos, além de acompanhar bem queijos frescos\nServir entre 5 e 6 ºC",
+  "ordem": 6,
+  "preco": 59.9,
   "ativo": true,
-  "ordem": 6
+  "imagem": "../../assets/uploads/1018-spumante-cuvee-brut-contri.png",
+  "categoria": "vinhos-espumantes",
+  "resumo": "Itália - Espumante Branco Brut 750ml",
+  "nome": "Spumante Cuvée Brut Contri",
+  "disponivel_na_cesta": true
 }
