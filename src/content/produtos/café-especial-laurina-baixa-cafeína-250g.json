@@ -3,7 +3,7 @@
   "destaque": false,
   "descricao": "Café especial 100% Arábica, com baixa cafeína naturalmente, notas florais, chocolate e açúcar mascavo. Direto do produtor no Sul de Minas, 86 pontos.",
   "ordem": 9,
-  "preco": null,
+  "preco": 49.9,
   "ativo": true,
   "imagem": "../../assets/uploads/laurinha-grao.jpg",
   "categoria": "cafes-chas",
