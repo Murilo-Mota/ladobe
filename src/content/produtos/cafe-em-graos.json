@@ -1,13 +1,13 @@
 {
-  "nome": "Café em Grãos",
-  "categoria": "cafes-chas",
-  "resumo": "Grãos selecionados",
-  "descricao": "",
-  "imagem": "../../assets/uploads/graos.jpg",
   "imagens": [],
-  "preco": null,
   "destaque": false,
-  "disponivel_na_cesta": true,
+  "descricao": "Café especial 100% Arábica, com baixa cafeína naturalmente, notas florais, chocolate e açúcar mascavo. Direto do produtor no Sul de Minas, 86 pontos.",
+  "ordem": 9,
+  "preco": null,
   "ativo": true,
-  "ordem": 9
+  "imagem": "../../assets/uploads/laurinha-grao.jpg",
+  "categoria": "cafes-chas",
+  "resumo": "100% Arábica em Grãos",
+  "nome": "Café Especial Laurina Baixa Cafeína 250g",
+  "disponivel_na_cesta": true
 }
