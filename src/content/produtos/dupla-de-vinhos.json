@@ -1,13 +1,13 @@
 {
-  "nome": "Dupla de Vinhos",
-  "categoria": "vinhos-espumantes",
-  "resumo": "Duas garrafas selecionadas",
-  "descricao": "",
-  "imagem": "../../assets/uploads/garrafas.jpg",
   "imagens": [],
-  "preco": null,
   "destaque": false,
-  "disponivel_na_cesta": true,
+  "descricao": "De coloração amarelo palha tênue e\nbrilho límpido, exibe perlage delicado com borbulhas frisante constantes, típico de um branco frisante. No nariz, apresenta perfil frutado e fresco, com notas de maçã verde, pera e toque florais suaves. Em boca, Ataque suavemente doce (amabile), corpo leve, acidez refrescante e textura limpal.\nHarmoniza com carnes brancas grelhadas, peixes leves, saladas e aperitivos da cozinha oriental. \nServir entre 8 e 10 ºC",
+  "ordem": 7,
+  "preco": 69.9,
   "ativo": true,
-  "ordem": 7
+  "imagem": "../../assets/uploads/38-lambrusco-dell-emilia-igt-bianco-amerigo-vespucci.png",
+  "categoria": "vinhos-espumantes",
+  "resumo": "Itália - Branco Suave Frisante 750ml",
+  "nome": "Lambrusco dell'Emilia IGT Bianco Amerigo Vespucci",
+  "disponivel_na_cesta": true
 }
