@@ -1,0 +1,13 @@
+{
+  "imagens": [],
+  "destaque": false,
+  "descricao": "Café especial 100% Arábica, com baixa cafeína naturalmente, notas florais, chocolate e açúcar mascavo. Direto do produtor no Sul de Minas, 86 pontos.",
+  "ordem": 9,
+  "preco": null,
+  "ativo": true,
+  "imagem": "../../assets/uploads/laurinha-grao.jpg",
+  "categoria": "cafes-chas",
+  "resumo": "100% Arábica em Moído",
+  "nome": "Café Especial Laurina Baixa Cafeína 250g",
+  "disponivel_na_cesta": true
+}
