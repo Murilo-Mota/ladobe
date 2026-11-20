@@ -2,7 +2,7 @@
   "nome": "Chocolates",
   "descricao": "Barras, bombons e especialidades",
   "icone": "cacau",
-  "imagem": "../../assets/uploads/cat-chocolates.jpg",
+  "imagem": "../../assets/uploads/chocolate.jpg",
   "ordem": 0,
   "ativo": true
 }
